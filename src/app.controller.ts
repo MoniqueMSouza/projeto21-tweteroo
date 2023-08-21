@@ -37,4 +37,12 @@ export class AppController {
       throw new HttpException(error.message, error.status);
     }
   }
+  @Get('tweets/:username')
+  getTweetsByUsername(@Param('username') username: string) {
+    try {
+      return this.appService.getTweetsByUsername(username);
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
+  }
   }

@@ -62,4 +62,17 @@ export class AppService {
 
     return responseArr.slice(0, 15);
   }
+  getTweetsByUsername(username: string) {
+    const resArr = [];
+
+    this.tweets.forEach((tt) => {
+      if(tt.user.username === username) {
+        const { user, tweet } = tt;
+        const { username, avatar } = user;
+        resArr.push({username, avatar, tweet});
+      }
+    });
+
+    return resArr;
+  }
 }
