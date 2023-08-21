@@ -33,4 +33,33 @@ export class AppService {
     const tweet = new Tweet(user, body.tweet);
     return this.tweets.push(tweet);
   }
+
+  getTweets(page: number) {
+    if (page < 1) throw new HttpException('Page must be greater than 0', 400);
+
+    const invertedTweets = this.tweets.reverse();
+    const responseArr = [];
+
+    if (page) {
+      const tweetsPage = 15;
+      const startIndex = (page - 1) * tweetsPage;
+      const endIndex = startIndex + tweetsPage;
+
+      for (let i = startIndex; i < endIndex && i < invertedTweets.length; i++) {
+        const { user, tweet } = invertedTweets[i];
+        const { username, avatar } = user;
+        responseArr.push({ username, avatar, tweet });
+      }
+    } else {
+      for (let i = 0; i < invertedTweets.length; i++) {
+        const { user, tweet } = invertedTweets[i];
+        const { username, avatar } = user;
+        responseArr.push({ username, avatar, tweet });
+      }
+    }
+
+    if (responseArr.length < 10) return responseArr;
+
+    return responseArr.slice(0, 15);
+  }
 }

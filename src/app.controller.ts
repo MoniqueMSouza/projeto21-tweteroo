@@ -29,4 +29,12 @@ export class AppController {
       throw new HttpException(error.message, error.status);
     }
   }
+  @Get('tweets')
+  getTweets(@Query('page') page: number) {
+    try {
+      return this.appService.getTweets(page);
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
+  }
   }
